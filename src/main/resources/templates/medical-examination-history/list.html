@@ -1,0 +1,97 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Medicine Examination History</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">List Medicine Examination History</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
+                        <li class="breadcrumb-item active">List Medicine Examination History</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    <!--    <span class="d-none" id="messageSuccess" th:text="${message}"></span>-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                <a th:href="@{/medical-examination-history/add}" type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i>Thêm mới</a>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="examination-list" class="table table-striped" style="width:100%">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="align-middle">#</th>
+                                <th class="align-middle">Staff ID</th>
+                                <th class="align-middle">Created Date</th>
+                                <th class="align-middle">Patient ID</th>
+                                <th class="align-middle">Description</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="e,stat : ${examinationList}">
+
+                                <td th:text="${stat.index + 1}"></td>
+                                <td th:text="${e.staffId}"></td>
+                                <td th:text="${e.createdDate}"></td>
+                                <td th:text="${e.patientId}"></td>
+                                <td th:text="${e.description}"></td>
+
+                                <td>
+<!--                                    <a th:href="@{/account/detail(id=${account.id})}" class="btn btn-secondary btn-sm">Details</a>-->
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new DataTable('#examination-list');
+    </script>
+
+</div>
+</body>
+
+</html>
+
+

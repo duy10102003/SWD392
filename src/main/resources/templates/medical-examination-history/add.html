@@ -1,0 +1,105 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new medicine</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">Add New Medicine</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a th:href="@{/account/list}">List Medicine</a></li>
+                        <li class="breadcrumb-item active">Add New Medicine</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div th:if="${response}">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert" th:text="${response}">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <div th:if="${errors}">
+                <div th:each="error : ${errors}" th:text="${error}" class="alert alert-danger" role="alert"></div>
+            </div>
+
+            <h2>Add new Medical Examination History</h2>
+            <hr>
+            <form method="post" th:action="@{/medical-examination-history/add}" th:object="${medicalExaminationHistoryDto}" role="form">
+                <div class="form-group">
+                    <label for="examinationDescription">Examination Description</label>
+                    <input type="text" class="form-control" id="examinationDescription" th:field="*{description}" placeholder="Examination Description">
+                    <p th:errors="*{description}" class="text-danger"
+                       th:if="${#fields.hasErrors('description')}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="patientInfoId">Patient ID </label>
+                    <input type="number" class="form-control" id="patientInfoId" th:field="*{patientId}" placeholder="Patient ID">
+                    <p th:errors="*{patientId}" class="text-danger"
+                       th:if="${#fields.hasErrors('patientId')}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="staffId">Staff Id</label>
+                    <input type="text" class="form-control" id="staffId" th:field="*{staffId}" readonly>
+                    <p th:errors="*{staffId}" class="text-danger"
+                       th:if="${#fields.hasErrors('staffId')}"></p>
+                </div>
+                <div class="form-group">
+                    <label for="createdDate">Created Date</label>
+                    <input type="text" class="form-control" id="createdDate" th:field="*{createdDate}" readonly>
+                    <p th:errors="*{createdDate}" class="text-danger"
+                       th:if="${#fields.hasErrors('createdDate')}"></p>
+                </div>
+
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+        </div>
+    </div>
+    <!-- end row -->
+    <script>
+        function handleSelect(e) {
+            e.target.parentElement.querySelector('input').value = e.target.value;
+        }
+
+        function setCurrentDate(inputId) {
+            const dateInput = document.getElementById(inputId);
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const day = String(currentDate.getDate()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+            dateInput.value = formattedDate;
+        }
+
+        function PageReload() {
+            const patientSlt = document.getElementById('patientSelection');
+            const medicalRecordSlt = document.getElementById('medicalRecordSelection');
+            patientSlt.value = patientSlt.parentElement.querySelector('input').value;
+            medicalRecordSlt.value = medicalRecordSlt.parentElement.querySelector('input').value;
+        }
+
+        setCurrentDate('createdDate');
+        PageReload();
+    </script>
+</div>
+
+</body>
+</html>

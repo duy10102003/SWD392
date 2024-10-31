@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Medicine</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">List Medicine</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
+                        <li class="breadcrumb-item active">List Medicine</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+<!--    <span class="d-none" id="messageSuccess" th:text="${message}"></span>-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <div class="search-box me-2 mb-2 d-inline-block">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <i class="bx bx-search-alt search-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                <a th:href="@{/medicine/add}" type="button" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i>Thêm mới</a>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="medicine-list" class="table align-middle table-nowrap table-check">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="align-middle">ID</th>
+                                <th class="align-middle">Name</th>
+                                <th class="align-middle">Quantity</th>
+                                <th class="align-middle">Price</th>
+                                <th class="align-middle">Description</th>
+                                <th class="align-middle">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="medicine : ${medicineList}">
+                                <td><a class="text-body fw-bold">#<span th:text="${medicine.id}"></span></a> </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <h6 class="m-b-0 m-l-10" th:text="${medicine.name}"></h6>
+                                    </div>
+                                </td>
+                                <td th:text="${medicine.quantity}"></td>
+                                <td><span th:text="${medicine.price}"></span> VNĐ</td>
+                                <td th:text="${medicine.description}"></td>
+                                <td>
+                                    <a th:href="@{/medicine/detail(id=${medicine.id})}" class="btn btn-secondary btn-sm">Details</a>
+                                </td>
+                            </tr>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new DataTable('#medicine-list');
+    </script>
+</div>
+</body>
+
+</html>
+
+

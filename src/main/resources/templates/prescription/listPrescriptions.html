@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Prescription List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+  <h2 class="mb-4">Prescription List</h2>
+
+  <!-- Success Message -->
+  <div th:if="${param.addSuccess}">
+    <div class="alert alert-success">Prescription created successfully.</div>
+  </div>
+
+  <!-- Error Message -->
+  <div th:if="${param.error != null}">
+    <div class="alert alert-danger">There was an error processing your request!</div>
+  </div>
+
+
+  <a th:href="@{/prescription/create}" class="btn btn-success">Add New Prescription</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

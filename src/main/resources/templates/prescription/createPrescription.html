@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/admin_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Prescription</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">Create Prescription</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a th:href="@{/prescriptions}">List Prescriptions</a></li>
+                        <li class="breadcrumb-item active">Create Prescription</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Create New Prescription</h2>
+            <div th:if="${param.error != null}">
+                <div class="alert alert-danger">Not enough stock for one or more medicines!</div>
+            </div>
+            <hr>
+            <form method="post" th:action="@{/prescription/create}" role="form">
+
+                <input type="hidden" name="medicineInvoiceId"  th:value="2"/>
+                <input type="hidden" name="doctorId"  th:value="2"/>
+                <div class="form-group">
+                    <label for="medicalRecordId">Select Medical Record</label>
+                    <select class="form-control" id="medicalRecordId" name="medicalRecordId" required>
+                        <option th:each="record : ${medicalRecords}"
+                                th:value="${record.id}"
+                                th:text="${record.description}">Record</option>
+                    </select>
+                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="medicineInvoiceId">Select Medicine Invoice</label>-->
+<!--                    <select class="form-control" id="medicineInvoiceId" name="medicineInvoiceId" required>-->
+<!--                        <option th:each="invoice : ${medicineInvoices}"-->
+<!--                                th:value="${invoice.id}"-->
+<!--                                th:text="${invoice.id}">Invoice</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="doctorId">Select Doctor</label>-->
+<!--                    <select class="form-control" id="doctorId" name="doctorId" required>-->
+<!--                        <option th:each="doc : ${doctors}"-->
+<!--                                th:value="${doc.id}"-->
+<!--                                th:text="${doc.name}">Doctor</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+                <h3>Select Medicines:</h3>
+                <div th:each="medicine, iterStat : ${medicines}">
+                    <div class="form-group">
+                        <input type="checkbox" th:value="${medicine.id}" th:id="'medicine' + ${iterStat.index}" name="medicineIds" />
+                        <label th:for="'medicine' + ${iterStat.index}" th:text="${medicine.name}"></label>
+                        <input type="number" class="form-control" name="quantities" placeholder="Quantity" min="1" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-secondary">Create Prescription</button>
+            </form>
+            <hr>
+            <a th:href="@{/prescriptions}" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+
+</body>
+</html>
+
+
